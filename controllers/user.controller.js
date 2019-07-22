@@ -9,10 +9,11 @@ module.exports.register = (req, res, next) => {
     user.password = req.body.password;
     user.save((err, doc) => {
         if (!err)
-            res.send(doc);
+            res.status(200).send({status:"true",id:doc.id,"message":"registered Successfully"});
         else {
-            if (err.code == 11000)
-                res.status(422).send(['Duplicate email adrress found.']);
+            console.log("This is error ",err)
+            if (err)
+                res.status(422).send({status:"false",code:err.code,"message":err.errmsg});
             else
                 return next(err);
         }
