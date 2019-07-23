@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const User = mongoose.model('User');
 
-module.exports.register = (req, res, next) => {
+register = (req, res, next) => {
     var user = new User();
     user.fullName = req.body.fullName;
     user.email = req.body.email;
@@ -19,4 +19,25 @@ module.exports.register = (req, res, next) => {
         }
 
     });
+}
+login = (req, res, next) => {
+    
+        User.findOne({"email":req.body.email},function(err,res2){
+            if(res2.password==req.body.password)
+            {
+                res.status(200).send({status:"true","message":"registered Successfully "});
+            }
+            else{
+                 res.status(422).send({status:"false","message":"PASSWORD INCORRECT..Provide the correct password"});
+            }
+            
+})
+} 
+forgotpass=(req,res,next)=>{
+
+}
+module.exports = {
+    register,
+    login,
+    forgotpass
 }

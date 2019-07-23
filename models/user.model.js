@@ -16,7 +16,7 @@ var userSchema = new mongoose.Schema({
         required: 'Password can\'t be empty',
         minlength : [4,'Password must be atleast 4 character long']
     },
-    saltSecret: String
+    // saltSecret: String
 });
 
 // Custom validation for email
@@ -26,14 +26,14 @@ userSchema.path('email').validate((val) => {
 }, 'Invalid e-mail.');
 
 // Events
-userSchema.pre('save', function (next) {
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(this.password, salt, (err, hash) => {
-            this.password = hash;
-            this.saltSecret = salt;
-            next();
-        });
-    });
-});
+// userSchema.pre('save', function (next) {
+//     bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(this.password, salt, (err, hash) => {
+//             this.password = hash;
+//             this.saltSecret = salt;
+//             next();
+//         });
+//     });
+// });
 
 mongoose.model('User', userSchema);
